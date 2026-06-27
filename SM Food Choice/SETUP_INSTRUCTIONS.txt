@@ -1,0 +1,149 @@
+================================================================================
+SM FOOD CHOICE - ADMIN & VENDOR SYSTEM SETUP GUIDE
+================================================================================
+
+QUICK START SETUP (First Time):
+================================
+
+1. CREATE DATABASE TABLES:
+   - Open phpMyAdmin: http://localhost/phpmyadmin
+   - Click on your "register" database
+   - Go to SQL tab
+   - Copy & paste the content from database_setup.sql
+   - Click "Go" to execute
+
+2. DEFAULT CREDENTIALS:
+   - Admin Login: Username = "admin", Password = "admin123"
+   - Vendor: Create through admin panel
+
+================================================================================
+HOW TO USE THE SYSTEM:
+================================================================================
+
+ADMIN PANEL:
+-----------
+1. Go to: http://localhost/SMFoodChoice/admin_login.php
+2. Login with: username = "admin", password = "admin123"
+3. In admin dashboard you can:
+   - Add Vendors (vendors who sell food)
+   - Add/Edit/Delete Food Items
+   - Manage all vendors' menus
+
+Steps:
+a) Click "+ Add Vendor" to create new vendors
+b) Fill in vendor name, email, and password
+c) Click "+ Add Food Item" to add menu items to the menu
+d) Select the vendor, category, item name, and price
+
+VENDOR PANEL:
+-------------
+1. Vendors login at: http://localhost/SMFoodChoice/vendor_login.php
+2. Use email and password provided by admin
+3. Vendors can ONLY see and manage their own items:
+   - View their menu items
+   - Add new items
+   - Edit existing items
+   - Delete items
+4. Vendors CANNOT see other vendor's items or admin controls
+
+================================================================================
+FILE STRUCTURE:
+================================================================================
+
+New files created:
+- database_setup.sql          (Database tables - run this first!)
+- admin_login.php             (Admin login page)
+- admin_logout.php            (Admin logout)
+- admin_dashboard.php         (Admin control panel)
+- admin_add_vendor.php        (Add vendors)
+- admin_edit_vendor.php       (Edit vendors)
+- admin_add_item.php          (Add food items)
+- admin_edit_item.php         (Edit food items)
+- vendor_login.php            (Vendor login page)
+- vendor_logout.php           (Vendor logout)
+- vendor_dashboard.php        (Vendor control panel)
+- vendor_add_item.php         (Vendors add items)
+- vendor_edit_item.php        (Vendors edit items)
+
+DATABASE TABLES:
+- vendors              (Stores vendor info: name, email, password)
+- food_items          (Stores all food items: name, price, category, vendor_id)
+- users               (Customer signup data)
+- admin_users         (Admin accounts)
+
+================================================================================
+EXAMPLE USAGE WORKFLOW:
+================================================================================
+
+1. ADMIN FIRST TIME SETUP:
+   - Login as admin
+   - Add a vendor: "Pizza House" (email: pizza@example.com, password: pizza123)
+   - Add another vendor: "Burger King" (email: burger@example.com, password: burger123)
+   - Add food items for Pizza House
+   - Add food items for Burger King
+
+2. VENDORS USE THEIR DASHBOARD:
+   - Pizza House manager logs in with: email=pizza@example.com, password=pizza123
+   - Sees only their items
+   - Can add/edit/delete their items
+   - CANNOT see Burger King's items
+
+3. CUSTOMERS ORDER:
+   - Visit http://localhost/SMFoodChoice/Home.php
+   - Browse all items from all vendors
+   - Add to cart
+   - Checkout (order goes to WhatsApp)
+
+================================================================================
+IMPORTANT NOTES:
+================================================================================
+
+1. DATABASE SECURITY:
+   - Currently passwords are stored as plain text (not secure)
+   - For production: use password_hash() and password_verify()
+
+2. ACCESS CONTROL:
+   - Vendors can only see/edit their own items
+   - Admin has full control
+   - Code checks vendor_id before allowing edits
+
+3. PRODUCT CATEGORIES:
+   - Items are grouped by category (e.g., "Momos", "Rice & Noodles")
+   - Multiple vendors can have items in same category
+   - Each item is linked to one vendor
+
+4. VEGETARIAN/NON-VEG:
+   - Checkbox in add/edit forms
+   - Checked = Vegetarian (🟢 veg.webp icon)
+   - Unchecked = Non-Vegetarian (🔴 non-veg.webp icon)
+
+================================================================================
+TROUBLESHOOTING:
+================================================================================
+
+Problem: "Connection failed" error
+Solution: Ensure MySQL is running and connection details in connect.php are correct
+
+Problem: Page says "Please login first"
+Solution: Your session expired or you're not logged in. Use admin_login.php or vendor_login.php
+
+Problem: Vendor can't see their items
+Solution: Make sure vendor is logged in with correct email/password
+
+Problem: Items not displaying on Home.php
+Solution: Run database_setup.sql and add items through admin/vendor panels
+
+================================================================================
+NEXT STEPS:
+================================================================================
+
+1. Run database_setup.sql in phpMyAdmin
+2. Test admin login: http://localhost/SMFoodChoice/admin_login.php
+3. Add a vendor through admin panel
+4. Have vendor login and add menu items
+5. Check Home.php to see items displayed (needs Home.php update for DB)
+
+FUTURE ENHANCEMENT - TO FETCH ITEMS FROM DATABASE:
+(See separate instructions for dynamic Home.php)
+
+================================================================================

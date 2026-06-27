@@ -1,0 +1,13 @@
+text,label
+"Dear customer, your account will be suspended today. Verify your login now at http://secure-bank-alert.example to avoid closure.",phishing
+"Congratulations, you have won a cash prize. Send your password and card number to claim immediately.",phishing
+"We detected unusual activity on your mailbox. Confirm your email credentials within 24 hours or access will be removed.",phishing
+"Urgent invoice payment required. Open the attached link and update your banking information.",phishing
+"Your package delivery failed. Pay a small redelivery fee using the link below.",phishing
+"Security team notice: reset your password using the official company portal if prompted by single sign-on.",legitimate
+"Hi team, the project meeting has moved to Thursday at 10 AM. Please review the agenda before then.",legitimate
+"Your monthly statement is available in the mobile banking app. We will never ask for your password by email.",legitimate
+"Thanks for your order. Your receipt is attached and tracking details are available in your account.",legitimate
+"Reminder: benefits enrollment closes Friday. Visit the HR portal from the intranet to review your options.",legitimate
+"Immediate action required: your payroll deposit failed. Re-enter your bank password through this temporary link.",phishing
+"Please find the approved travel policy attached. Contact finance if any expense category is unclear.",legitimate

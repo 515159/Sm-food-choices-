@@ -1,0 +1,14 @@
+{
+  "name": "smfood",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Selenium automation for SM Food Choice pages",
+  "scripts": {
+    "test:api": "node tests/page-tests.js",
+    "test:selenium": "node tests/selenium-pages.js"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.31.0"
+  }
+}
+

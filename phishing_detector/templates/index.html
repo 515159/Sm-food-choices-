@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phishing Email Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="scanner">
+        <div class="heading">
+          <p class="eyebrow">Email Security Classifier</p>
+          <h1>Phishing Email Detector</h1>
+          <p class="summary">Paste an email message and scan it with a TF-IDF text model trained in scikit-learn.</p>
+        </div>
+
+        <form method="post" class="scan-form">
+          <label for="email_text">Email text</label>
+          <textarea id="email_text" name="email_text" rows="14" placeholder="Paste the suspicious email here...">{{ email_text }}</textarea>
+          <button type="submit" title="Scan email text">
+            <span aria-hidden="true">Scan</span>
+          </button>
+        </form>
+      </section>
+
+      <aside class="result-panel" aria-live="polite">
+        {% if error %}
+          <div class="notice warning">
+            <span class="status-dot"></span>
+            <strong>Action needed</strong>
+            <p>{{ error }}</p>
+          </div>
+        {% elif result %}
+          <div class="notice {{ 'danger' if result.is_phishing else 'safe' }}">
+            <span class="status-dot"></span>
+            <strong>{{ 'Phishing detected' if result.is_phishing else 'Likely legitimate' }}</strong>
+            <p>
+              {% if result.probability is not none %}
+                Phishing probability: {{ result.probability }}%
+              {% else %}
+                The model classified this message as {{ result.label }}.
+              {% endif %}
+            </p>
+          </div>
+        {% else %}
+          <div class="notice neutral">
+            <span class="status-dot"></span>
+            <strong>Ready to scan</strong>
+            <p>The result will appear here after the email is submitted.</p>
+          </div>
+        {% endif %}
+
+        <div class="model-card">
+          <h2>Model Snapshot</h2>
+          <dl>
+            <div>
+              <dt>Algorithm</dt>
+              <dd>Logistic Regression</dd>
+            </div>
+            <div>
+              <dt>Vectorizer</dt>
+              <dd>TF-IDF, uni/bigrams</dd>
+            </div>
+            <div>
+              <dt>Accuracy</dt>
+              <dd>{{ "%.2f"|format(metrics.accuracy * 100) ~ "%" if metrics.accuracy is defined else "Train model first" }}</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>
