@@ -2,18 +2,29 @@
 include("connect.php");
 
 // Fetch all food items grouped by category
-$query = "SELECT * FROM food_items ORDER BY category, name";
-$result = mysqli_query($conn, $query);
-$food_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-// Group items by category
 $categories = [];
-foreach ($food_items as $item) {
-    $cat = $item['category'];
-    if (!isset($categories[$cat])) {
-        $categories[$cat] = [];
+$db_notice = "";
+
+if ($conn) {
+    $query = "SELECT * FROM food_items ORDER BY category, name";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $food_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        // Group items by category
+        foreach ($food_items as $item) {
+            $cat = $item['category'];
+            if (!isset($categories[$cat])) {
+                $categories[$cat] = [];
+            }
+            $categories[$cat][] = $item;
+        }
+    } else {
+        $db_notice = "Menu items are unavailable. Please run database_setup.sql in the register database.";
     }
-    $categories[$cat][] = $item;
+} else {
+    $db_notice = "Menu items are unavailable because the database is not connected. Start MySQL in XAMPP and refresh this page.";
 }
 ?>
 <!DOCTYPE html>
@@ -367,8 +378,8 @@ foreach ($food_items as $item) {
           } else {
           ?>
           <div style="text-align: center; padding: 40px;">
-            <h2>No items available yet</h2>
-            <p>Check back soon for our menu updates!</p>
+            <h2>Menu items unavailable</h2>
+            <p><?php echo htmlspecialchars($db_notice ?: "Check back soon for our menu updates!"); ?></p>
           </div>
           <?php
           }
